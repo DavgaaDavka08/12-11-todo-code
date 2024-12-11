@@ -66,46 +66,138 @@ containerItems.map((item) => {
 });
 const todoData = [
   {
-    title: " geree tseverleh",
+    title: "Гэрээ цэвэрлэх",
     date: "2024-12-09",
     state: "todo",
   },
   {
-    title: "Shine jildee yvah",
+    title: "Шинэ жилдээ явах",
     date: "2024-12-09",
-    state: "todo",
+    state: "in-progress",
   },
   {
-    title: "Huvtssaa beldeh",
+    title: "Хувцас бэлдэх",
     date: "2024-12-09",
-    state: "todo",
+    state: "done",
+  },
+  {
+    title: "Ажлын төлөвлөгөө гаргах",
+    date: "2024-12-10",
+    state: "blocked",
   },
 ];
+
 function addobj(title, date, state) {
   let targetContainer = document.querySelector(`#${state}`);
 
-  //etsegdiv
+  // parent div
   let mainDiv = document.createElement("div");
   mainDiv.setAttribute("class", "parent-title");
-  //title atribute
+
+  // Title heseg
   let divtitle = document.createElement("div");
   divtitle.setAttribute("class", "first-title");
-  divtitle.innerHTML = title;
+  divtitle.innerText = title;
   mainDiv.appendChild(divtitle);
-  //
+
+  // Date heseg
   let divdate = document.createElement("div");
   divdate.setAttribute("class", "date");
-  divdate.innerHTML = date;
+  divdate.innerText = date;
   mainDiv.appendChild(divdate);
-  //
+
+  // State heseg
   let divstate = document.createElement("div");
   divstate.setAttribute("class", "state");
-  divstate.innerHTML = state;
+  divstate.innerText = state;
   mainDiv.appendChild(divstate);
-  //
+
+  // Target container-t nemeh
   targetContainer.appendChild(mainDiv);
-  targetContainer.appendChild(todoList);
 }
-todoData.map((elements) => {
-  addobj(elements.title, elements.date, elements.state);
+
+// todoData dotorh contoineriig hargalzah contoinart nemeh
+todoData.map((element) => {
+  addobj(element.title, element.date, element.state);
 });
+let todos = ["geree tseverleh", "hool hiih", "hicheel hiih", "kino uzeh"];
+const button = document.getElementById("button");
+const input = document.getElementById("input");
+
+button.addEventListener("click", () => {
+  if (!input.value) {
+    errorHanding();
+    return;
+  } else {
+    errorRemove();
+    todos.push(input.value);
+    renderTodos();
+    input.value = null;
+  }
+});
+///
+///
+///
+///
+//
+// buttun
+let todoss = ["geree tseverleh", "hool hiih", "hicheel hiih", "kino uzeh"];
+const buttons = document.getElementById("button");
+const inputs = document.getElementById("input");
+
+button.addEventListener("click", () => {
+  if (!input.value) {
+    errorHanding();
+    return;
+  } else {
+    errorRemove();
+    todos.push(input.value);
+    renderTodos();
+    input.value = null;
+  }
+});
+function renderTodos() {
+  const tasklist = document.getElementById("tasklist");
+  tasklist.innerHTML = ""; // huuchiniig tseverleh
+
+  todos.map((todo, index) => {
+    //new
+    const todoContainer = document.createElement("div");
+    todoContainer.setAttribute("class", "todoContainer");
+
+    // udtgah bottumnii zurag
+    const img = document.createElement("img");
+    img.setAttribute("src", "./3405244.png");
+
+    // ustgah towch
+    const iconButton = document.createElement("button");
+    iconButton.setAttribute("id", "removeIcon");
+    iconButton.appendChild(img);
+
+    // ustgah bottumdeer darsan tohioldold hih uildel
+    iconButton.addEventListener("click", () => {
+      todos.splice(index, 1); // ni elementeer array dah elementiig ustgana
+      renderTodos(); // todo jagsaaltiig dahin hiine
+    });
+
+    todoContainer.appendChild(iconButton);
+
+    // Todo text
+    const p = document.createElement("p");
+    p.innerText = todo;
+    todoContainer.appendChild(p);
+
+    tasklist.appendChild(todoContainer);
+  });
+}
+
+function errorHanding() {
+  const p = document.getElementById("error");
+  p.innerText = "Aldaa garlaa";
+}
+
+function errorRemove() {
+  const p = document.getElementById("error");
+  p.innerText = null;
+}
+//buttun;
